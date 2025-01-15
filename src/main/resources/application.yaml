@@ -2,6 +2,15 @@ server:
   port: 8082
 
 spring:
+  profiles:
+    active: dev
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
   jpa:
     show-sql: true
     hibernate:
@@ -10,3 +19,47 @@ spring:
     url: jdbc:postgresql://localhost:5432/websklad
     username: postgres
     password: root
+
+welcome:
+  message: Hello, Egor!
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: qa
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/websklad-qa
+    username: postgres
+    password: root
+
+welcome:
+  message: Hello, Egor!
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/websklad-prod
+    username: postgres
+    password: root
+
+welcome:
+  message: Hello, Egor!
