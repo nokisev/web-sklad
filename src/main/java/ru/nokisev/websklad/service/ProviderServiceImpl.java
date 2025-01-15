@@ -3,10 +3,12 @@ package ru.nokisev.websklad.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nokisev.websklad.entity.Provider;
+import ru.nokisev.websklad.error.ProviderNotFoundException;
 import ru.nokisev.websklad.repository.ProviderRepository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ProviderServiceImpl implements ProviderService {
@@ -26,8 +28,15 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public Provider fetchProviderById(Long providerId) {
-        return providerRepository.findById(providerId).get();
+    public Provider fetchProviderById(Long providerId)
+            throws ProviderNotFoundException {
+        Optional<Provider> provider =
+                providerRepository.findById(providerId);
+        if (!provider.isPresent()) {
+            throw new ProviderNotFoundException("Поставщик с таким индентификатором не найден");
+        }
+
+        return provider.get();
     }
 
     @Override

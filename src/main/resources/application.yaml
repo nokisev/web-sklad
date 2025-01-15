@@ -2,10 +2,11 @@ server:
   port: 8082
 
 spring:
-  h2:
-    console:
-      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   datasource:
-    url: jdbc:h2:mem:websklad
-    username: nokisev
+    url: jdbc:postgresql://localhost:5432/websklad
+    username: postgres
     password: root
